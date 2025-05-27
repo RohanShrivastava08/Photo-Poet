@@ -24,14 +24,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 type PoemLength = 'short' | 'medium' | 'long';
 
-const SAMPLE_IMAGE_URL = 'https://placehold.co/600x400.png';
-const SAMPLE_POEM = `Upon a canvas, stark and wide,
-Where silent pixels softly ride.
-A gentle scene, perhaps a dream,
-Of nature's peace, a flowing stream.
-Or mountains grand, in misty light,
-Awaiting words to take their flight.`;
-const SAMPLE_IMAGE_HINT = "landscape nature";
+const SAMPLE_IMAGE_URL = 'https://placehold.co/600x400.png'; // URL remains a general placeholder
+const SAMPLE_POEM = `Chrome gleams, a forgotten dream,
+Engine's ghost, a silent scream.
+Lines of speed, now standing still,
+Echoes of a bygone thrill.`;
+const SAMPLE_IMAGE_HINT = "classic car"; // Updated hint
 
 export default function PhotoPoetApp() {
   const [imageDataUrl, setImageDataUrl] = useState<string | null>(SAMPLE_IMAGE_URL);
@@ -273,7 +271,7 @@ export default function PhotoPoetApp() {
                 {imageDataUrl ? (
                   <Image
                     src={imageDataUrl}
-                    alt={imageDataUrl === SAMPLE_IMAGE_URL ? "Sample landscape placeholder" : "Uploaded inspiration"}
+                    alt={imageDataUrl === SAMPLE_IMAGE_URL ? "Sample classic car placeholder" : "Uploaded inspiration"}
                     width={600} 
                     height={400}
                     className="object-contain w-full h-full animate-fadeIn"
@@ -316,7 +314,7 @@ export default function PhotoPoetApp() {
                 <FileText className="h-7 w-7" /> Poetic Echoes
               </CardTitle>
               <CardDescription className="text-muted-foreground/80 pt-1">
-                 {poem === SAMPLE_POEM ? "A sample poem generated for the image. Try your own!" : "AI-crafted verse inspired by your image."}
+                 {poem === SAMPLE_POEM ? "A sample poem inspired by a classic car. Try your own!" : "AI-crafted verse inspired by your image."}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex-grow space-y-6 flex flex-col justify-between pt-2"> 
