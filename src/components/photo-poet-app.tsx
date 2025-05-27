@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { 
   Upload, Share2, RefreshCw, Loader2, Feather, 
-  Image as ImageIcon, FileText, Sun, Moon, Download, LinkIcon, Twitter, Facebook, Linkedin, Copy, Palette, HelpCircle
+  Image as ImageIcon, FileText, Sun, Moon, Download, LinkIcon, Twitter, Facebook, Linkedin, Copy, Palette, HelpCircle, MessageSquareQuote
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -20,12 +20,22 @@ import { handleGeneratePoem, handleRegeneratePoemWithLength, handleRegeneratePoe
 import { Skeleton } from '@/components/ui/skeleton';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 type PoemLength = 'short' | 'medium' | 'long';
 
+const SAMPLE_IMAGE_URL = 'https://placehold.co/600x400.png';
+const SAMPLE_POEM = `Upon a canvas, stark and wide,
+Where silent pixels softly ride.
+A gentle scene, perhaps a dream,
+Of nature's peace, a flowing stream.
+Or mountains grand, in misty light,
+Awaiting words to take their flight.`;
+const SAMPLE_IMAGE_HINT = "landscape nature";
+
 export default function PhotoPoetApp() {
-  const [imageDataUrl, setImageDataUrl] = useState<string | null>(null);
-  const [poem, setPoem] = useState<string | null>(null);
+  const [imageDataUrl, setImageDataUrl] = useState<string | null>(SAMPLE_IMAGE_URL);
+  const [poem, setPoem] = useState<string | null>(SAMPLE_POEM);
   const [isLoading, setIsLoading] = useState(false);
   const [customTone, setCustomTone] = useState('');
   const [customLength, setCustomLength] = useState<PoemLength>('medium');
@@ -39,12 +49,19 @@ export default function PhotoPoetApp() {
   useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    if (poem) {
+    // Initial display of sample poem with animation
+    if (poem && !displayPoem && imageDataUrl === SAMPLE_IMAGE_URL) {
+      const timer = setTimeout(() => setDisplayPoem(poem), 50);
+      return () => clearTimeout(timer);
+    }
+    // Animation for newly generated poems
+    if (poem && displayPoem !== poem) {
       setDisplayPoem(null); 
       const timer = setTimeout(() => setDisplayPoem(poem), 50); 
       return () => clearTimeout(timer);
     }
-  }, [poem]);
+  }, [poem, displayPoem, imageDataUrl]);
+
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -56,8 +73,8 @@ export default function PhotoPoetApp() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImageDataUrl(reader.result as string);
-        setPoem(null);
-        setDisplayPoem(null);
+        setPoem(null); // Clear previous poem (sample or generated)
+        setDisplayPoem(null); // Clear display poem
         toast({ title: 'Image Loaded', description: 'Ready to conjure some verse.', className: 'bg-primary text-primary-foreground' });
       };
       reader.readAsDataURL(file);
@@ -172,14 +189,38 @@ export default function PhotoPoetApp() {
     if (imageDataUrl && !poem && !isLoading) {
        return <p className="text-muted-foreground italic text-center py-16 px-6">Your visual muse awaits. Adjust preferences, then unveil the verse.</p>;
     }
+    // This case should ideally not be hit if we always have a sample image/poem or an upload prompt
     return (
       <div className="text-center py-16 px-6 flex flex-col items-center justify-center h-full">
         <Feather size={56} className="mb-6 text-primary opacity-50" />
         <p className="text-xl text-foreground/80 font-medium">Welcome to PhotoPoet</p>
-        <p className="text-sm text-muted-foreground/70 mt-2 max-w-xs mx-auto">Transform your images into inspired lyrical art with a touch of AI magic.</p>
+        <p className="text-sm text-muted-foreground/70 mt-2 max-w-xs mx-auto">Upload an image to begin.</p>
       </div>
     );
   }, [isLoading, displayPoem, poem, imageDataUrl]);
+
+  const faqItems = [
+    {
+      value: "item-1",
+      question: "What kind of images work best?",
+      answer: "PhotoPoet can draw inspiration from any image! Clearer images with distinct subjects, colors, and moods often yield more evocative poems. Experiment to see what magic unfolds!",
+    },
+    {
+      value: "item-2",
+      question: "Can I edit the poem after it's generated?",
+      answer: "Currently, you can regenerate the poem with different length and tone preferences using the controls. Direct text editing within the app is not yet supported, but you can easily copy the poem and edit it in your favorite text editor.",
+    },
+    {
+      value: "item-3",
+      question: "How is the poem generated?",
+      answer: "PhotoPoet uses advanced generative AI. The AI analyzes the visual elements, themes, and emotions it perceives in your uploaded image to compose a unique poem tailored to your photo.",
+    },
+    {
+      value: "item-4",
+      question: "Is my uploaded image stored anywhere?",
+      answer: "No, your images are processed in real-time solely for the purpose of generating the poem and are not stored on our servers. Your privacy is important to us.",
+    },
+  ];
 
 
   if (!mounted) {
@@ -197,9 +238,9 @@ export default function PhotoPoetApp() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/90 backdrop-blur-lg supports-[backdrop-filter]:bg-background/75">
-        <div className="container mx-auto flex justify-between items-center p-4 h-[76px]"> {/* Increased height */}
+        <div className="container mx-auto flex justify-between items-center p-4 h-[76px]">
           <div className="flex items-center gap-3">
-            <PhotoPoetLogo className="h-16 w-auto" /> {/* Slightly larger logo */}
+            <PhotoPoetLogo className="h-16 w-auto" />
           </div>
           <div className="flex items-center gap-3">
             <Button
@@ -216,27 +257,31 @@ export default function PhotoPoetApp() {
       </header>
 
       <main className="flex-grow container mx-auto p-4 md:p-6 lg:p-8 animate-slideUp">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12"> {/* Increased gap */}
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           
           <Card className="shadow-lg card-hover-elevate bg-card border-border/70">
             <CardHeader className="pb-4">
               <CardTitle className="text-xl lg:text-2xl font-semibold flex items-center gap-3 text-primary">
                 <ImageIcon className="h-7 w-7" /> Your Visual Muse
               </CardTitle>
-              <CardDescription className="text-muted-foreground/80 pt-1">Upload an image to inspire a unique poem.</CardDescription>
+              <CardDescription className="text-muted-foreground/80 pt-1">
+                {imageDataUrl === SAMPLE_IMAGE_URL ? "A sample image to get you started. Upload your own!" : "Upload an image to inspire a unique poem."}
+              </CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col items-center space-y-6 pt-2"> {/* Increased space */}
+            <CardContent className="flex flex-col items-center space-y-6 pt-2">
               <div className="w-full aspect-[16/10] max-w-2xl bg-muted/20 rounded-lg overflow-hidden flex items-center justify-center border-2 border-dashed border-border/50 hover:border-primary/60 transition-colors duration-300 shadow-inner">
                 {imageDataUrl ? (
                   <Image
                     src={imageDataUrl}
-                    alt="Uploaded inspiration"
-                    width={640} 
+                    alt={imageDataUrl === SAMPLE_IMAGE_URL ? "Sample landscape placeholder" : "Uploaded inspiration"}
+                    width={600} 
                     height={400}
                     className="object-contain w-full h-full animate-fadeIn"
-                    data-ai-hint="user uploaded image"
+                    data-ai-hint={imageDataUrl === SAMPLE_IMAGE_URL ? SAMPLE_IMAGE_HINT : "user uploaded image"}
+                    priority={imageDataUrl === SAMPLE_IMAGE_URL} // Prioritize loading sample image
                   />
                 ) : (
+                  // This fallback might not be seen often with sample image
                   <div className="flex flex-col items-center justify-center text-muted-foreground/60 p-8 text-center">
                     <ImageIcon size={64} className="mb-5 opacity-40" />
                     <p className="font-medium text-base">Your image canvas awaits.</p>
@@ -257,9 +302,10 @@ export default function PhotoPoetApp() {
                 className="w-full max-w-md text-base py-3.5 group hover:shadow-primary/20 hover:shadow-lg" 
                 variant="default"
                 size="lg"
-                aria-label={imageDataUrl ? 'Change uploaded photo' : 'Upload a photo'}
+                aria-label={imageDataUrl && imageDataUrl !== SAMPLE_IMAGE_URL ? 'Change uploaded photo' : 'Upload a new photo'}
               >
-                <Upload className="mr-2.5 h-5 w-5 transition-transform group-hover:translate-y-[-2px]" /> {imageDataUrl ? 'Change Photo' : 'Select Photo'}
+                <Upload className="mr-2.5 h-5 w-5 transition-transform group-hover:translate-y-[-2px]" /> 
+                {imageDataUrl && imageDataUrl !== SAMPLE_IMAGE_URL ? 'Change Photo' : 'Upload New Photo'}
               </Button>
             </CardContent>
           </Card>
@@ -269,7 +315,9 @@ export default function PhotoPoetApp() {
               <CardTitle className="text-xl lg:text-2xl font-semibold flex items-center gap-3 text-accent">
                 <FileText className="h-7 w-7" /> Poetic Echoes
               </CardTitle>
-              <CardDescription className="text-muted-foreground/80 pt-1">AI-crafted verse inspired by your image.</CardDescription>
+              <CardDescription className="text-muted-foreground/80 pt-1">
+                 {poem === SAMPLE_POEM ? "A sample poem generated for the image. Try your own!" : "AI-crafted verse inspired by your image."}
+              </CardDescription>
             </CardHeader>
             <CardContent className="flex-grow space-y-6 flex flex-col justify-between pt-2"> 
               <div className="poem-text-display flex flex-col justify-center">
@@ -280,7 +328,8 @@ export default function PhotoPoetApp() {
                 <div className="space-y-5 p-5 border border-border/40 rounded-lg bg-background shadow-sm mt-4">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-lg font-semibold text-primary flex items-center gap-2.5">
-                      <Palette className="h-5 w-5" /> {poem ? "Refine Your Verse" : "Set Preferences"}
+                      <Palette className="h-5 w-5" /> 
+                      {poem && poem !== SAMPLE_POEM ? "Refine Your Verse" : "Set Preferences"}
                     </h3>
                   </div>
                   
@@ -312,7 +361,7 @@ export default function PhotoPoetApp() {
                         type="text"
                         value={customTone}
                         onChange={(e) => setCustomTone(e.target.value)}
-                        placeholder="e.g., joyful, reflective, epic"
+                        placeholder="e.g., joyful, reflective"
                         className="bg-input hover:border-primary/50 focus:ring-primary/40 text-sm"
                       />
                        {poem && (
@@ -326,7 +375,7 @@ export default function PhotoPoetApp() {
                 </div>
               )}
 
-              {imageDataUrl && !poem && (
+              {imageDataUrl && !poem && ( // Show Generate Poem button only if no poem (neither sample nor generated)
                 <Button 
                   onClick={generatePoem} 
                   disabled={isLoading} 
@@ -341,7 +390,7 @@ export default function PhotoPoetApp() {
               )}
 
 
-              {poem && (
+              {poem && ( // Show action buttons if there's any poem (sample or generated)
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-4">
                   <Button 
                     onClick={handleCopyPoem}
@@ -413,18 +462,39 @@ export default function PhotoPoetApp() {
           <p className="text-muted-foreground/90 leading-relaxed text-sm md:text-base lg:text-lg">
             Welcome to PhotoPoet! Unleash your creativity by transforming your favorite images into unique, AI-generated poems. 
             Simply <strong className="text-primary/90">upload a photo</strong> that inspires you. Our intelligent muse will then <strong className="text-accent/90">craft a verse</strong> reflecting its essence. 
-            After the initial creation, you can <strong className="text-primary/90">refine the poem's tone and length</strong> to perfectly match your vision. 
+            After the initial creation, or even before, you can <strong className="text-primary/90">set preferences for the poem's tone and length</strong> to perfectly match your vision. 
             It&apos;s a new way to find inspiration, express yourself, and see your pictures in a completely different light.
           </p>
           <p className="text-muted-foreground/80 mt-5 text-sm md:text-base">
             Ready to begin? Just <strong className="text-primary/90">select a photo</strong> using the panel above and let the magic unfold!
           </p>
         </section>
+
+        <Separator className="my-10 md:my-14 lg:my-16 bg-border/50" />
+
+        <section className="max-w-3xl mx-auto animate-fadeIn" style={{animationDelay: '0.6s'}}>
+          <div className="flex flex-col items-center mb-6">
+            <MessageSquareQuote className="h-10 w-10 text-accent opacity-80 mb-3" />
+            <h2 className="text-2xl lg:text-3xl font-semibold text-foreground/90">Frequently Asked Questions</h2>
+          </div>
+          <Accordion type="single" collapsible className="w-full">
+            {faqItems.map((item) => (
+              <AccordionItem value={item.value} key={item.value} className="border-border/70">
+                <AccordionTrigger className="text-left hover:no-underline text-base lg:text-lg font-medium text-foreground/90 hover:text-primary transition-colors py-5">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground/90 text-sm md:text-base leading-relaxed pb-5">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </section>
       </main>
 
       <footer className="p-8 border-t border-border/50 bg-card/60 text-center mt-16"> 
         <div className="container mx-auto">
-          <PhotoPoetLogo className="mx-auto mb-4 h-10" /> {/* Smaller logo in footer */}
+          <PhotoPoetLogo className="mx-auto mb-4 h-10" />
           <p className="text-xs text-muted-foreground/80"> 
             &copy; {new Date().getFullYear()} PhotoPoet. Weaving words with light, crafted with code.
           </p>
@@ -436,3 +506,4 @@ export default function PhotoPoetApp() {
     </div>
   );
 }
+
