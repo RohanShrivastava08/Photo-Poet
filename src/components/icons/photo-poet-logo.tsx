@@ -4,33 +4,49 @@ export function PhotoPoetLogo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 50" // Adjusted viewBox for potentially taller/wider logo if needed
-      // Default width and height are removed, will be controlled by className or style prop
-      // width="120" // Example: Can be overridden by props
-      // height="30"  // Example: Can be overridden by props
-      {...props} // Spread props to allow overriding width, height, className, etc.
+      viewBox="0 0 220 50" // Adjusted viewBox slightly
+      {...props}
     >
       <defs>
-        <linearGradient id="logoGradientElegant" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="logoGradientClassy" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" style={{ stopColor: 'hsl(var(--primary))', stopOpacity: 1 }} />
           <stop offset="100%" style={{ stopColor: 'hsl(var(--accent))', stopOpacity: 1 }} />
         </linearGradient>
+         <filter id="subtleShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+          <feOffset dx="1" dy="1" result="offsetblur"/>
+          <feFlood floodColor="hsl(var(--foreground))" floodOpacity="0.2"/>
+          <feComposite in2="offsetblur" operator="in"/>
+          <feMerge>
+            <feMergeNode/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
       </defs>
-      {/* Optional: a subtle background rectangle if needed, or keep transparent */}
-      {/* <rect width="200" height="50" rx="5" fill="transparent" /> */}
+      <g filter="url(#subtleShadow)">
       <text
-        x="50%" // Center text horizontally
-        y="50%" // Center text vertically
-        dy=".3em" // Fine-tune vertical alignment
-        textAnchor="middle" // Ensure horizontal centering
-        fontFamily="var(--font-geist-mono), monospace"
-        fontSize="28" // Slightly adjusted font size
-        fontWeight="600" // Slightly less bold for elegance
-        fill="url(#logoGradientElegant)"
-        letterSpacing="-0.5" // Slightly tighter letter spacing
+        x="50%"
+        y="50%"
+        dy=".3em"
+        textAnchor="middle"
+        fontFamily="var(--font-geist-sans), Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif" // More elegant font stack
+        fontSize="30" // Increased size
+        fontWeight="500" // Medium weight
+        fill="url(#logoGradientClassy)"
+        letterSpacing="-0.75" // Tighter spacing
       >
         PhotoPoet
       </text>
+      {/* Optional: A subtle underline or embellishment */}
+      <path
+        d="M 40 42 Q 110 38 180 42" // Simple curved underline
+        stroke="url(#logoGradientClassy)"
+        strokeWidth="1.5"
+        fill="none"
+        strokeLinecap="round"
+        opacity="0.6"
+      />
+      </g>
     </svg>
   );
 }

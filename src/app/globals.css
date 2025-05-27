@@ -4,7 +4,55 @@
 
 @layer base {
   :root {
-    /* Sophisticated Dark Theme */
+    /* Light Theme */
+    --background: 0 0% 100%; /* White */
+    --foreground: 220 15% 20%; /* Dark Cool Grey */
+
+    --card: 0 0% 97%; /* Light Grey */
+    --card-foreground: 220 15% 25%;
+
+    --popover: 0 0% 98%;
+    --popover-foreground: 220 15% 25%;
+
+    --primary: 200 85% 50%; /* Vibrant Blue */
+    --primary-foreground: 0 0% 100%; /* White for contrast on blue */
+
+    --secondary: 220 10% 90%; /* Lighter Cool Grey */
+    --secondary-foreground: 220 15% 30%;
+
+    --muted: 220 10% 85%; /* Light Grey for muted elements */
+    --muted-foreground: 220 10% 55%; /* Darker grey for muted text */
+
+    --accent: 250 70% 60%; /* Playful Purple */
+    --accent-foreground: 0 0% 100%; /* White for contrast on accent */
+
+    --destructive: 0 70% 55%; /* Retained red for destructive actions */
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 10% 80%; /* Subtle border color */
+    --input: 220 10% 92%; /* Input background */
+    --ring: 200 85% 55%; /* Primary color for rings */
+
+    --radius: 0.65rem; /* Slightly smaller radius for a cleaner feel */
+
+    --chart-1: 200 70% 50%;
+    --chart-2: 250 60% 55%;
+    --chart-3: 30 80% 60%;
+    --chart-4: 150 65% 45%;
+    --chart-5: 330 75% 65%;
+
+    --sidebar-background: 0 0% 96%;
+    --sidebar-foreground: 220 15% 22%;
+    --sidebar-primary: 200 85% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 250 70% 60%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 10% 75%;
+    --sidebar-ring: 200 85% 55%;
+  }
+
+  .dark {
+    /* Sophisticated Dark Theme (from previous state) */
     --background: 220 20% 7%; /* Deep charcoal blue */
     --foreground: 220 15% 88%; /* Light cool grey */
 
@@ -32,56 +80,8 @@
     --border: 220 15% 25%; /* Subtle border color */
     --input: 220 15% 20%; /* Input background */
     --ring: 45 90% 65%; /* Primary color for rings */
-
-    --radius: 0.75rem; /* Slightly larger radius for a modern feel */
-
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-
-    --sidebar-background: 220 20% 9%;
-    --sidebar-foreground: 220 15% 85%;
-    --sidebar-primary: 45 90% 65%;
-    --sidebar-primary-foreground: 220 20% 10%;
-    --sidebar-accent: 190 80% 55%;
-    --sidebar-accent-foreground: 220 20% 10%;
-    --sidebar-border: 220 15% 20%;
-    --sidebar-ring: 45 90% 65%;
-  }
-
-  .dark {
-    /* Keeping the same dark theme variables for consistency,
-       as the new default is already dark.
-       If a separate light theme is ever needed, these would differ. */
-    --background: 220 20% 7%;
-    --foreground: 220 15% 88%;
-
-    --card: 220 20% 11%;
-    --card-foreground: 220 15% 88%;
-
-    --popover: 220 20% 10%;
-    --popover-foreground: 220 15% 88%;
-
-    --primary: 45 90% 65%;
-    --primary-foreground: 220 20% 10%;
-
-    --secondary: 210 15% 25%;
-    --secondary-foreground: 210 15% 80%;
-
-    --muted: 220 15% 20%;
-    --muted-foreground: 220 10% 65%;
-
-    --accent: 190 80% 60%;
-    --accent-foreground: 220 20% 10%;
-
-    --destructive: 0 70% 55%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 220 15% 25%;
-    --input: 220 15% 20%;
-    --ring: 45 90% 65%;
+    
+    /* --radius is same as :root */
 
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -133,8 +133,7 @@
   50% { transform: scale(1.03); }
 }
 .animate-subtlePop:hover {
-  /* Use sparingly, can be performance intensive if overused */
-  /* transform: scale(1.03); */ /* Direct transform is often smoother than animation for simple hover */
+  /* transform: scale(1.03); */ /* Direct transform is often smoother */
 }
 
 /* Gentle slide-up for cards or sections */
@@ -152,4 +151,41 @@
 }
 .card-hover-elevate:hover {
   @apply shadow-2xl transform -translate-y-1;
+}
+
+/* Styling for scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted) / 0.5);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.7);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
+
+.poem-text-display {
+  white-space: pre-wrap;
+  font-family: var(--font-geist-mono), monospace; /* Using mono for poems can be nice */
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: hsl(var(--foreground) / 0.9);
+  padding: theme(spacing.4);
+  border-radius: var(--radius);
+  background-color: hsl(var(--background) / 0.5); /* Subtle background */
+  border: 1px solid hsl(var(--border) / 0.5);
+  box-shadow: inset 0 1px 3px hsl(var(--muted) / 0.2);
+  min-height: 200px; /* Ensure it has some height even when empty */
+  max-height: 450px; /* Prevent it from becoming too tall */
+  overflow-y: auto;
+}
+
+.dark .poem-text-display {
+  background-color: hsl(var(--background) / 0.8); /* Darker subtle background for dark mode */
 }
