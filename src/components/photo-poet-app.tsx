@@ -1,3 +1,4 @@
+
 // src/components/photo-poet-app.tsx
 "use client";
 
@@ -6,7 +7,7 @@ import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { 
   Upload, Share2, Settings2, RefreshCw, Loader2, Feather, 
-  Image as ImageIcon, FileText, Sun, Moon, Download, LinkIcon, Twitter, Facebook, Linkedin
+  Image as ImageIcon, FileText, Sun, Moon, Download, LinkIcon, Twitter, Facebook, Linkedin, Copy
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -28,8 +29,7 @@ export default function PhotoPoetApp() {
   const [customTone, setCustomTone] = useState('');
   const [customLength, setCustomLength] = useState<PoemLength>('medium');
   const [displayPoem, setDisplayPoem] = useState<string | null>(null);
-  const [isInitialGeneration, setIsInitialGeneration] = useState(true);
-
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const { theme, setTheme } = useTheme();
@@ -39,8 +39,8 @@ export default function PhotoPoetApp() {
 
   useEffect(() => {
     if (poem) {
-      setDisplayPoem(null); // Clear previous poem if any
-      const timer = setTimeout(() => setDisplayPoem(poem), 50); // Small delay for re-triggering animation
+      setDisplayPoem(null); 
+      const timer = setTimeout(() => setDisplayPoem(poem), 50); 
       return () => clearTimeout(timer);
     }
   }, [poem]);
@@ -48,7 +48,7 @@ export default function PhotoPoetApp() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      if (file.size > 5 * 1024 * 1024) { 
         toast({ title: 'File too large', description: 'Please upload an image smaller than 5MB.', variant: 'destructive' });
         return;
       }
@@ -57,7 +57,9 @@ export default function PhotoPoetApp() {
         setImageDataUrl(reader.result as string);
         setPoem(null);
         setDisplayPoem(null);
-        setIsInitialGeneration(true);
+        // Reset tone and length for new image if desired, or keep previous settings
+        // setCustomTone(''); 
+        // setCustomLength('medium');
         toast({ title: 'Image Loaded', description: 'Ready to generate your poem.', variant: 'default', className: 'bg-primary text-primary-foreground' });
       };
       reader.readAsDataURL(file);
@@ -83,7 +85,6 @@ export default function PhotoPoetApp() {
     setIsLoading(false);
     if (result.success && result.poem) {
       setPoem(result.poem);
-      setIsInitialGeneration(false);
       toast({ title: 'Poem Generated!', description: 'Your poetic masterpiece awaits.', className: 'bg-accent text-accent-foreground' });
     } else {
       toast({ title: 'Generation Error', description: result.error || 'Failed to generate poem. Please try again.', variant: 'destructive' });
@@ -136,6 +137,15 @@ export default function PhotoPoetApp() {
     URL.revokeObjectURL(link.href);
     toast({ title: 'Poem Downloaded!', description: 'Saved as PhotoPoem.txt.' });
   };
+
+  const handleCopyPoem = () => {
+    if (!poem) {
+      toast({ title: 'Nothing to Copy', description: 'Generate a poem first.', variant: 'destructive' });
+      return;
+    }
+    navigator.clipboard.writeText(poem);
+    toast({ title: 'Poem Copied!', description: 'Your verse is ready to paste.' });
+  };
   
   const handleShare = async () => {
     if (!poem || !imageDataUrl) {
@@ -144,7 +154,7 @@ export default function PhotoPoetApp() {
     }
     const title = 'My PhotoPoem Creation';
     const text = `Check out this poem I generated with PhotoPoet for my image:\n\n${poem}\n\n#PhotoPoet #AIpoetry`;
-    const url = window.location.href; // Or a specific URL to the creation if available
+    const url = window.location.href; 
 
     if (navigator.share) {
       try {
@@ -152,7 +162,6 @@ export default function PhotoPoetApp() {
         toast({ title: 'Shared Successfully!', description: 'Your poem has been shared.' });
       } catch (error) {
         if ((error as Error).name !== 'AbortError') {
-          // Fallback to manual share options if navigator.share fails or is not fully supported
           showManualShareOptions(title, text, url);
         }
       }
@@ -162,22 +171,24 @@ export default function PhotoPoetApp() {
   };
 
   const showManualShareOptions = (title: string, text: string, url: string) => {
-     // This function is implicitly called by handleShare, so the Popover should be triggered by the main share button
-     // The content of the popover will be the manual share options.
-     // We'll use the toast to inform them if copy to clipboard was used.
     navigator.clipboard.writeText(text + "\n" + url);
-    toast({ title: 'Copied to Clipboard!', description: 'Poem and link copied. You can use the share links or paste anywhere.' });
+    toast({ title: 'Copied to Clipboard!', description: 'Poem and link copied. Use the share links or paste anywhere.' });
   };
 
   const PoemDisplay = useCallback(() => {
     if (isLoading && !displayPoem) {
+      const loadingMessages = ["Brewing your ballad...", "Composing your couplets...", "Polishing your prose...", "Weaving words of wonder..."];
+      const randomMessage = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
       return (
-        <div className="space-y-3 p-4">
-          <Skeleton className="h-5 w-full rounded-md bg-muted/50" />
-          <Skeleton className="h-5 w-5/6 rounded-md bg-muted/50" />
-          <Skeleton className="h-5 w-full rounded-md bg-muted/50" />
-          <Skeleton className="h-5 w-4/6 rounded-md bg-muted/50" />
-          <Skeleton className="h-5 w-full rounded-md bg-muted/50" />
+        <div className="p-4 text-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-3" />
+          <p className="text-muted-foreground italic mb-4">{randomMessage}</p>
+          <div className="space-y-3">
+            <Skeleton className="h-5 w-11/12 rounded-md bg-muted/50 mx-auto" />
+            <Skeleton className="h-5 w-5/6 rounded-md bg-muted/50 mx-auto" />
+            <Skeleton className="h-5 w-full rounded-md bg-muted/50 mx-auto" />
+            <Skeleton className="h-5 w-4/6 rounded-md bg-muted/50 mx-auto" />
+          </div>
         </div>
       );
     }
@@ -189,9 +200,15 @@ export default function PhotoPoetApp() {
       );
     }
     if (imageDataUrl && !poem && !isLoading) {
-       return <p className="text-muted-foreground italic text-center py-10 px-4">Your canvas awaits transformation. Hit 'Generate Poem' to begin the magic.</p>;
+       return <p className="text-muted-foreground italic text-center py-10 px-4">Your image is set! Adjust preferences below, then hit 'Generate Poem' to start the magic.</p>;
     }
-    return <p className="text-muted-foreground italic text-center py-10 px-4">Upload a photo and let Photo Poet weave words into your visuals.</p>;
+    return (
+      <div className="text-center py-10 px-4 flex flex-col items-center justify-center h-full">
+        <Feather size={48} className="mb-4 text-primary opacity-70" />
+        <p className="text-lg text-muted-foreground font-medium">Welcome to PhotoPoet</p>
+        <p className="text-sm text-muted-foreground/80 mt-1">Upload a photo and let us weave words into your visuals.</p>
+      </div>
+    );
   }, [isLoading, displayPoem, poem, imageDataUrl]);
 
 
@@ -213,7 +230,6 @@ export default function PhotoPoetApp() {
         <div className="container mx-auto flex justify-between items-center p-3 h-20">
           <div className="flex items-center gap-3">
             <PhotoPoetLogo className="h-12 w-auto" />
-            {/* Removed h1 title as requested, logo stands alone */}
           </div>
           <div className="flex items-center gap-2">
             <Button
@@ -246,7 +262,7 @@ export default function PhotoPoetApp() {
                     src={imageDataUrl}
                     alt="Uploaded inspiration"
                     width={600}
-                    height={400} // Adjust height based on aspect-video if needed
+                    height={400}
                     className="object-contain w-full h-full animate-fadeIn"
                     data-ai-hint="user uploaded image"
                   />
@@ -285,28 +301,15 @@ export default function PhotoPoetApp() {
               <CardDescription className="text-muted-foreground/90">AI-crafted verse inspired by your image.</CardDescription>
             </CardHeader>
             <CardContent className="flex-grow space-y-5 flex flex-col justify-between">
-              <div className="poem-text-display">
+              <div className="poem-text-display min-h-[200px] flex flex-col justify-center"> {/* Ensure min-height for placeholder */}
                 <PoemDisplay />
               </div>
               
-              {isInitialGeneration && imageDataUrl && (
-                <Button 
-                  onClick={generatePoem} 
-                  disabled={isLoading || !imageDataUrl} 
-                  className="w-full text-base py-5 group hover:shadow-accent/40 hover:shadow-lg"
-                  variant="secondary"
-                  aria-label="Generate poem from uploaded image"
-                >
-                  {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Feather className="mr-2 h-5 w-5 group-hover:animate-ping" />}
-                  Generate Poem
-                </Button>
-              )}
-
-              {(poem || (imageDataUrl && !isInitialGeneration)) && (
+              {imageDataUrl && (
                 <div className="space-y-4 p-4 border border-border/40 rounded-lg bg-muted/30 shadow-sm">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-lg font-semibold text-primary flex items-center gap-2">
-                      <Settings2 className="h-5 w-5" />Refine Your Verse
+                      <Settings2 className="h-5 w-5" /> {poem ? "Refine Your Verse" : "Set Preferences"}
                     </h3>
                   </div>
                   
@@ -314,7 +317,7 @@ export default function PhotoPoetApp() {
                     <div className="space-y-2">
                       <Label htmlFor="poemLength" className="text-sm font-medium text-foreground/90">Poem Length</Label>
                       <Select value={customLength} onValueChange={(value: PoemLength) => setCustomLength(value)}>
-                        <SelectTrigger id="poemLength" className="bg-background hover:border-primary/60">
+                        <SelectTrigger id="poemLength" className="bg-background hover:border-primary/60 focus:ring-primary/50">
                           <SelectValue placeholder="Select length" />
                         </SelectTrigger>
                         <SelectContent>
@@ -323,7 +326,7 @@ export default function PhotoPoetApp() {
                           <SelectItem value="long">Epic Tale</SelectItem>
                         </SelectContent>
                       </Select>
-                      {!isInitialGeneration && poem && (
+                      {poem && (
                          <Button onClick={regenerateWithLength} disabled={isLoading} variant="outline" className="w-full mt-1.5 group hover:border-primary hover:text-primary">
                           {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />}
                           Apply Length
@@ -339,9 +342,9 @@ export default function PhotoPoetApp() {
                         value={customTone}
                         onChange={(e) => setCustomTone(e.target.value)}
                         placeholder="e.g., joyful, reflective"
-                        className="bg-background hover:border-primary/60"
+                        className="bg-background hover:border-primary/60 focus:ring-primary/50"
                       />
-                       {!isInitialGeneration && poem && (
+                       {poem && (
                           <Button onClick={regenerateWithTone} disabled={isLoading || !customTone} variant="outline" className="w-full mt-1.5 group hover:border-primary hover:text-primary">
                             {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />}
                             Apply Tone
@@ -349,33 +352,53 @@ export default function PhotoPoetApp() {
                        )}
                     </div>
                   </div>
-                   {isInitialGeneration && imageDataUrl && !poem &&
-                     <p className="text-xs text-muted-foreground/80 text-center pt-1">Set preferences before generation, or refine your poem after it's created.</p>
-                   }
                 </div>
               )}
 
+              {imageDataUrl && !poem && (
+                <Button 
+                  onClick={generatePoem} 
+                  disabled={isLoading} 
+                  className="w-full text-base py-5 group hover:shadow-accent/40 hover:shadow-lg"
+                  variant="secondary"
+                  aria-label="Generate poem from uploaded image"
+                >
+                  {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Feather className="mr-2 h-5 w-5 group-hover:animate-ping" />}
+                  Generate Poem
+                </Button>
+              )}
+
+
               {poem && (
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <Button 
+                    onClick={handleCopyPoem}
+                    disabled={isLoading || !poem}
+                    className="flex-1 text-base py-3 group"
+                    variant="outline"
+                    aria-label="Copy generated poem to clipboard"
+                  >
+                    <Copy className="mr-2 h-5 w-5 group-hover:animate-subtlePop" /> Copy
+                  </Button>
                   <Button 
                     onClick={handleDownloadPoem} 
                     disabled={isLoading || !poem} 
-                    className="flex-1 text-base py-5 group" 
+                    className="flex-1 text-base py-3 group" 
                     variant="outline"
                     aria-label="Download generated poem as text file"
                   >
-                    <Download className="mr-2 h-5 w-5 group-hover:animate-subtlePop" /> Download .txt
+                    <Download className="mr-2 h-5 w-5 group-hover:animate-subtlePop" /> Download
                   </Button>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button 
-                        onClick={handleShare} // This might only copy to clipboard now, popover shows links
+                        onClick={handleShare} 
                         disabled={isLoading || !poem} 
-                        className="flex-1 text-base py-5 group hover:shadow-primary/40 hover:shadow-lg" 
+                        className="flex-1 text-base py-3 group hover:shadow-primary/40 hover:shadow-lg" 
                         variant="default"
                         aria-label="Share generated poem"
                       >
-                        <Share2 className="mr-2 h-5 w-5 group-hover:animate-subtlePop" /> Share Poem
+                        <Share2 className="mr-2 h-5 w-5 group-hover:animate-subtlePop" /> Share
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-2 space-y-1 bg-card border-border shadow-xl rounded-md">
@@ -424,3 +447,4 @@ export default function PhotoPoetApp() {
     </div>
   );
 }
+
