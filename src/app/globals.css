@@ -4,35 +4,36 @@
 
 @layer base {
   :root {
-    --background: 0 0% 93.3%; /* #EEEEEE Light Grey */
-    --foreground: 240 10% 3.9%; /* Darker for better contrast on light grey */
+    /* Sophisticated Dark Theme */
+    --background: 220 20% 7%; /* Deep charcoal blue */
+    --foreground: 220 15% 88%; /* Light cool grey */
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card: 220 20% 11%; /* Slightly lighter charcoal */
+    --card-foreground: 220 15% 88%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover: 220 20% 10%;
+    --popover-foreground: 220 15% 88%;
 
-    --primary: 231 48% 48%; /* #3F51B5 Deep Blue */
-    --primary-foreground: 0 0% 98%; /* White/Off-white */
+    --primary: 45 90% 65%; /* Muted Gold / Amber */
+    --primary-foreground: 220 20% 10%; /* Dark for contrast on gold */
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    --secondary: 210 15% 25%; /* Cool dark grey */
+    --secondary-foreground: 210 15% 80%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 220 15% 20%; /* Darker grey for muted elements */
+    --muted-foreground: 220 10% 65%; /* Lighter grey for muted text */
 
-    --accent: 261 44% 66.3%; /* #9575CD Soft Violet */
-    --accent-foreground: 0 0% 98%; /* White/Off-white */
+    --accent: 190 80% 60%; /* Bright Cyan/Teal for accents */
+    --accent-foreground: 220 20% 10%; /* Dark for contrast on accent */
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 70% 55%; /* Slightly desaturated red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 231 48% 48%; /* Using primary color for ring */
+    --border: 220 15% 25%; /* Subtle border color */
+    --input: 220 15% 20%; /* Input background */
+    --ring: 45 90% 65%; /* Primary color for rings */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Slightly larger radius for a modern feel */
 
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
@@ -40,44 +41,47 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 220 20% 9%;
+    --sidebar-foreground: 220 15% 85%;
+    --sidebar-primary: 45 90% 65%;
+    --sidebar-primary-foreground: 220 20% 10%;
+    --sidebar-accent: 190 80% 55%;
+    --sidebar-accent-foreground: 220 20% 10%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 45 90% 65%;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Keeping the same dark theme variables for consistency,
+       as the new default is already dark.
+       If a separate light theme is ever needed, these would differ. */
+    --background: 220 20% 7%;
+    --foreground: 220 15% 88%;
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 220 20% 11%;
+    --card-foreground: 220 15% 88%;
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 220 20% 10%;
+    --popover-foreground: 220 15% 88%;
 
-    --primary: 231 48% 48%; /* #3F51B5 Deep Blue */
-    --primary-foreground: 0 0% 98%;
+    --primary: 45 90% 65%;
+    --primary-foreground: 220 20% 10%;
 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 210 15% 25%;
+    --secondary-foreground: 210 15% 80%;
 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted: 220 15% 20%;
+    --muted-foreground: 220 10% 65%;
 
-    --accent: 261 44% 66.3%; /* #9575CD Soft Violet */
-    --accent-foreground: 0 0% 98%;
+    --accent: 190 80% 60%;
+    --accent-foreground: 220 20% 10%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 231 48% 48%;
+    --border: 220 15% 25%;
+    --input: 220 15% 20%;
+    --ring: 45 90% 65%;
 
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -85,14 +89,14 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 220 20% 9%;
+    --sidebar-foreground: 220 15% 85%;
+    --sidebar-primary: 45 90% 65%;
+    --sidebar-primary-foreground: 220 20% 10%;
+    --sidebar-accent: 190 80% 55%;
+    --sidebar-accent-foreground: 220 20% 10%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 45 90% 65%;
   }
 }
 
@@ -102,7 +106,15 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* Removed font-family: Arial, Helvetica, sans-serif; to use Geist fonts */
+    /* Font family is set in layout.tsx via Geist fonts */
+  }
+  /* Global transition for a smoother experience */
+  button, a, input[type="file"], div[role="button"], [data-radix-collection-item] {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  ::selection {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
   }
 }
 
@@ -111,7 +123,33 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 .animate-fadeIn {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Subtle pop on hover for interactive elements */
+@keyframes subtlePop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+.animate-subtlePop:hover {
+  /* Use sparingly, can be performance intensive if overused */
+  /* transform: scale(1.03); */ /* Direct transform is often smoother than animation for simple hover */
+}
+
+/* Gentle slide-up for cards or sections */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slideUp {
+  animation: slideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Transition for card hover elevation */
+.card-hover-elevate {
+  @apply transition-all duration-300 ease-in-out;
+}
+.card-hover-elevate:hover {
+  @apply shadow-2xl transform -translate-y-1;
 }
