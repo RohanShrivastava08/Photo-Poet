@@ -8,7 +8,7 @@
     --background: 0 0% 100%; /* White */
     --foreground: 220 15% 18%; /* Slightly darker cool grey for better contrast */
 
-    --card: 0 0% 98%; /* Softer Light Grey for cards */
+    --card: 0 0% 98.5%; /* Softer Light Grey for cards, slightly brighter */
     --card-foreground: 220 15% 22%;
 
     --popover: 0 0% 99%; /* Very light grey for popovers */
@@ -29,8 +29,8 @@
     --destructive: 0 70% 50%; /* Slightly deeper red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 10% 85%; /* Softer border color */
-    --input: 220 10% 94%; /* Softer Input background */
+    --border: 220 10% 88%; /* Softer border color, aligned with muted */
+    --input: 220 10% 95%; /* Softer Input background, slightly brighter */
     --ring: 200 85% 52%; /* Primary color for rings, slightly adjusted */
 
     --radius: 0.65rem; /* Consistent radius */
@@ -53,32 +53,32 @@
 
   .dark {
     /* Refined Dark Theme */
-    --background: 220 20% 5%; /* Even deeper charcoal blue */
-    --foreground: 220 15% 90%; /* Brighter light cool grey */
+    --background: 220 20% 6%; /* Even deeper charcoal blue */
+    --foreground: 220 15% 92%; /* Brighter light cool grey */
 
-    --card: 220 20% 9%; /* Slightly darker charcoal for cards */
+    --card: 220 20% 10%; /* Slightly darker charcoal for cards, bit more separation */
     --card-foreground: 220 15% 90%;
 
-    --popover: 220 20% 8%; /* Darker popover */
+    --popover: 220 20% 9%; /* Darker popover, distinct from card */
     --popover-foreground: 220 15% 90%;
 
     --primary: 45 90% 60%; /* Slightly desaturated Muted Gold / Amber */
-    --primary-foreground: 220 20% 8%; 
+    --primary-foreground: 220 20% 10%; 
 
-    --secondary: 210 15% 22%; /* Darker cool grey for secondary */
-    --secondary-foreground: 210 15% 85%;
+    --secondary: 210 15% 25%; /* Darker cool grey for secondary, slightly richer */
+    --secondary-foreground: 210 15% 88%;
 
-    --muted: 220 15% 18%; /* Darker grey for muted elements */
-    --muted-foreground: 220 10% 60%; 
+    --muted: 220 15% 20%; /* Darker grey for muted elements */
+    --muted-foreground: 220 10% 65%; 
 
     --accent: 190 80% 55%; /* Slightly desaturated Bright Cyan/Teal */
-    --accent-foreground: 220 20% 8%; 
+    --accent-foreground: 220 20% 10%; 
 
-    --destructive: 0 65% 50%; /* Desaturated red */
+    --destructive: 0 65% 55%; /* Desaturated red, slightly brighter */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 15% 20%; /* Darker, subtle border */
-    --input: 220 15% 18%; /* Darker Input background */
+    --border: 220 15% 22%; /* Darker, subtle border */
+    --input: 220 15% 19%; /* Darker Input background */
     --ring: 45 90% 60%; 
     
     /* --radius is same as :root */
@@ -120,7 +120,7 @@
 
 /* Animation for fade-in effect */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); } /* Slightly less Y transform */
+  from { opacity: 0; transform: translateY(8px); } 
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fadeIn {
@@ -130,7 +130,7 @@
 /* Subtle pop on hover for interactive elements */
 @keyframes subtlePop {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.025); } /* Slightly less pop */
+  50% { transform: scale(1.025); } 
 }
 .animate-subtlePop:hover {
    /* Using direct transform can be smoother for simple scales */
@@ -138,7 +138,7 @@
 
 /* Gentle slide-up for cards or sections */
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(15px); } /* Slightly less Y transform */
+  from { opacity: 0; transform: translateY(15px); } 
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-slideUp {
@@ -150,46 +150,47 @@
   @apply transition-all duration-300 ease-in-out;
 }
 .card-hover-elevate:hover {
-  @apply shadow-xl transform -translate-y-0.5; /* More subtle elevation and shadow */
+  @apply shadow-xl transform -translate-y-1; /* Slightly more noticeable elevation for premium feel */
 }
 
 /* Styling for scrollbars - refined */
 ::-webkit-scrollbar {
-  width: 7px; /* Thinner scrollbar */
-  height: 7px;
+  width: 8px; /* Thinner scrollbar */
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted) / 0.3); /* More transparent track */
+  background: hsl(var(--muted) / 0.2); /* More transparent track */
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.6); /* Slightly more transparent thumb */
+  background: hsl(var(--primary) / 0.5); /* Slightly more transparent thumb */
   border-radius: 10px;
-  border: 1px solid hsl(var(--muted) / 0.3); /* Subtle border for thumb */
+  border: 1px solid hsl(var(--muted) / 0.2); /* Subtle border for thumb */
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.8); /* Darken on hover */
+  background: hsl(var(--primary) / 0.7); /* Darken on hover */
 }
 
 .poem-text-display {
   white-space: pre-wrap;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 1.05rem; /* Slightly adjusted font size */
-  line-height: 1.75; /* Increased line height for readability */
-  color: hsl(var(--foreground) / 0.85); /* Slightly softer text color */
-  padding: theme(spacing.6); /* Increased padding */
+  font-size: 1.0rem; /* Slightly smaller for a more refined look */
+  line-height: 1.8; /* Increased line height for readability and elegance */
+  color: hsl(var(--foreground) / 0.9); /* Slightly softer text color */
+  padding: theme(spacing.6) theme(spacing.8); /* Increased horizontal padding */
   border-radius: var(--radius);
-  background-color: hsl(var(--card) / 0.7); /* Use card color with transparency */
-  border: 1px solid hsl(var(--border) / 0.7); /* Softer border */
-  box-shadow: inset 0 1px 2px hsl(var(--muted) / 0.1); /* More subtle inner shadow */
-  min-height: 220px; /* Adjusted min-height */
-  max-height: 480px; /* Adjusted max-height */
+  background-color: hsl(var(--background)); /* Use background for a cleaner, embedded look */
+  border: 1px solid hsl(var(--border)); /* Subtle border */
+  box-shadow: inset 0 2px 4px hsl(var(--muted) / 0.05); /* More subtle inner shadow */
+  min-height: 240px; /* Adjusted min-height for better proportion */
+  max-height: 500px; /* Adjusted max-height */
   overflow-y: auto;
-  transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .dark .poem-text-display {
-  background-color: hsl(var(--card) / 0.85); /* Darker subtle background for dark mode */
+  background-color: hsl(var(--background)); 
   color: hsl(var(--foreground) / 0.9);
-  border-color: hsl(var(--border) / 0.7);
+  border-color: hsl(var(--border));
+  box-shadow: inset 0 2px 4px hsl(var(--foreground) / 0.03);
 }

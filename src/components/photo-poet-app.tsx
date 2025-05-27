@@ -6,8 +6,8 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { 
-  Upload, Share2, Settings2, RefreshCw, Loader2, Feather, 
-  Image as ImageIcon, FileText, Sun, Moon, Download, LinkIcon, Twitter, Facebook, Linkedin, Copy, Palette
+  Upload, Share2, RefreshCw, Loader2, Feather, 
+  Image as ImageIcon, FileText, Sun, Moon, Download, LinkIcon, Twitter, Facebook, Linkedin, Copy, Palette, HelpCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -19,6 +19,7 @@ import { PhotoPoetLogo } from '@/components/icons/photo-poet-logo';
 import { handleGeneratePoem, handleRegeneratePoemWithLength, handleRegeneratePoemWithTone } from '@/lib/actions';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Separator } from '@/components/ui/separator';
 
 type PoemLength = 'short' | 'medium' | 'long';
 
@@ -57,7 +58,7 @@ export default function PhotoPoetApp() {
         setImageDataUrl(reader.result as string);
         setPoem(null);
         setDisplayPoem(null);
-        toast({ title: 'Image Loaded', description: 'Ready to conjure some verse.', variant: 'default', className: 'bg-primary text-primary-foreground' });
+        toast({ title: 'Image Loaded', description: 'Ready to conjure some verse.', className: 'bg-primary text-primary-foreground' });
       };
       reader.readAsDataURL(file);
     }
@@ -144,27 +145,19 @@ export default function PhotoPoetApp() {
     toast({ title: 'Poem Copied!', description: 'Your verse is ready for the world.' });
   };
   
-  const handleShare = async () => {
-    if (!poem || !imageDataUrl) {
-      toast({ title: 'No Creation to Share', description: 'Generate a poem to share your inspiration.', variant: 'destructive' });
-      return;
-    }
-    // For Popover, this function might just open the popover. The actual sharing happens in PopoverContent buttons.
-  };
-
   const PoemDisplay = useCallback(() => {
     if (isLoading && !displayPoem) {
-      const loadingMessages = ["Conjuring couplets...", "Forging poetic fire...", "Sculpting stanzas...", "Weaving words of wonder..."];
+      const loadingMessages = ["Conjuring couplets...", "Forging poetic fire...", "Sculpting stanzas...", "Weaving words of wonder...", "Drafting lyrical lines..."];
       const randomMessage = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
       return (
-        <div className="p-6 text-center">
-          <Loader2 className="h-10 w-10 animate-spin text-primary mx-auto mb-4" />
-          <p className="text-muted-foreground italic text-sm mb-4">{randomMessage}</p>
-          <div className="space-y-3.5">
-            <Skeleton className="h-5 w-11/12 rounded-md bg-muted/40 mx-auto" />
-            <Skeleton className="h-5 w-5/6 rounded-md bg-muted/40 mx-auto" />
-            <Skeleton className="h-5 w-full rounded-md bg-muted/40 mx-auto" />
-            <Skeleton className="h-5 w-4/6 rounded-md bg-muted/40 mx-auto" />
+        <div className="p-6 text-center space-y-4">
+          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
+          <p className="text-muted-foreground italic text-sm">{randomMessage}</p>
+          <div className="space-y-3.5 pt-2">
+            <Skeleton className="h-5 w-11/12 rounded-md bg-muted/30 mx-auto" />
+            <Skeleton className="h-5 w-5/6 rounded-md bg-muted/30 mx-auto" />
+            <Skeleton className="h-5 w-full rounded-md bg-muted/30 mx-auto" />
+            <Skeleton className="h-5 w-4/6 rounded-md bg-muted/30 mx-auto" />
           </div>
         </div>
       );
@@ -177,13 +170,13 @@ export default function PhotoPoetApp() {
       );
     }
     if (imageDataUrl && !poem && !isLoading) {
-       return <p className="text-muted-foreground italic text-center py-12 px-6">Your visual muse awaits. Adjust preferences, then unveil the verse.</p>;
+       return <p className="text-muted-foreground italic text-center py-16 px-6">Your visual muse awaits. Adjust preferences, then unveil the verse.</p>;
     }
     return (
-      <div className="text-center py-12 px-6 flex flex-col items-center justify-center h-full">
-        <Feather size={52} className="mb-5 text-primary opacity-60" />
-        <p className="text-xl text-foreground/90 font-medium">Welcome to PhotoPoet</p>
-        <p className="text-sm text-muted-foreground/80 mt-1.5">Transform your images into inspired lyrical art.</p>
+      <div className="text-center py-16 px-6 flex flex-col items-center justify-center h-full">
+        <Feather size={56} className="mb-6 text-primary opacity-50" />
+        <p className="text-xl text-foreground/80 font-medium">Welcome to PhotoPoet</p>
+        <p className="text-sm text-muted-foreground/70 mt-2 max-w-xs mx-auto">Transform your images into inspired lyrical art with a touch of AI magic.</p>
       </div>
     );
   }, [isLoading, displayPoem, poem, imageDataUrl]);
@@ -192,7 +185,7 @@ export default function PhotoPoetApp() {
   if (!mounted) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-14 w-14 animate-spin text-primary" />
+        <Loader2 className="h-16 w-16 animate-spin text-primary" />
       </div>
     );
   }
@@ -203,10 +196,10 @@ export default function PhotoPoetApp() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex justify-between items-center p-4 h-[72px]"> {/* Increased height */}
+      <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/90 backdrop-blur-lg supports-[backdrop-filter]:bg-background/75">
+        <div className="container mx-auto flex justify-between items-center p-4 h-[76px]"> {/* Increased height */}
           <div className="flex items-center gap-3">
-            <PhotoPoetLogo className="h-14 w-auto" /> {/* Slightly larger logo */}
+            <PhotoPoetLogo className="h-16 w-auto" /> {/* Slightly larger logo */}
           </div>
           <div className="flex items-center gap-3">
             <Button
@@ -214,26 +207,26 @@ export default function PhotoPoetApp() {
               size="icon"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               aria-label="Toggle theme"
-              className="text-foreground/70 hover:text-foreground hover:bg-accent/10 rounded-full"
+              className="text-foreground/70 hover:text-foreground hover:bg-accent/10 rounded-full w-10 h-10"
             >
-              {theme === 'dark' ? <Sun className="h-[1.15rem] w-[1.15rem]" /> : <Moon className="h-[1.15rem] w-[1.15rem]" />}
+              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
           </div>
         </div>
       </header>
 
       <main className="flex-grow container mx-auto p-4 md:p-6 lg:p-8 animate-slideUp">
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-10"> {/* Increased gap */}
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12"> {/* Increased gap */}
           
-          <Card className="shadow-lg card-hover-elevate bg-card/80 border-border/50">
+          <Card className="shadow-lg card-hover-elevate bg-card border-border/70">
             <CardHeader className="pb-4">
               <CardTitle className="text-xl lg:text-2xl font-semibold flex items-center gap-3 text-primary">
-                <ImageIcon className="h-6 w-6 lg:h-7 lg:w-7" /> Your Visual Muse
+                <ImageIcon className="h-7 w-7" /> Your Visual Muse
               </CardTitle>
-              <CardDescription className="text-muted-foreground/90 pt-0.5">Upload an image to inspire a unique poem.</CardDescription>
+              <CardDescription className="text-muted-foreground/80 pt-1">Upload an image to inspire a unique poem.</CardDescription>
             </CardHeader>
-            <CardContent className="flex flex-col items-center space-y-6"> {/* Increased space */}
-              <div className="w-full aspect-[16/10] max-w-2xl bg-muted/30 rounded-lg overflow-hidden flex items-center justify-center border-2 border-dashed border-border/40 hover:border-primary/70 transition-colors duration-300 shadow-inner">
+            <CardContent className="flex flex-col items-center space-y-6 pt-2"> {/* Increased space */}
+              <div className="w-full aspect-[16/10] max-w-2xl bg-muted/20 rounded-lg overflow-hidden flex items-center justify-center border-2 border-dashed border-border/50 hover:border-primary/60 transition-colors duration-300 shadow-inner">
                 {imageDataUrl ? (
                   <Image
                     src={imageDataUrl}
@@ -244,10 +237,10 @@ export default function PhotoPoetApp() {
                     data-ai-hint="user uploaded image"
                   />
                 ) : (
-                  <div className="flex flex-col items-center justify-center text-muted-foreground/70 p-8 text-center">
-                    <ImageIcon size={60} className="mb-4 opacity-50" />
+                  <div className="flex flex-col items-center justify-center text-muted-foreground/60 p-8 text-center">
+                    <ImageIcon size={64} className="mb-5 opacity-40" />
                     <p className="font-medium text-base">Your image canvas awaits.</p>
-                    <p className="text-xs mt-1.5">Click below to select a photo and begin.</p>
+                    <p className="text-xs mt-1.5">Click below to select a photo and begin your poetic journey.</p>
                   </div>
                 )}
               </div>
@@ -261,69 +254,69 @@ export default function PhotoPoetApp() {
               />
               <Button 
                 onClick={triggerFileUpload} 
-                className="w-full max-w-sm text-base py-3 group hover:shadow-primary/30 hover:shadow-md" 
+                className="w-full max-w-md text-base py-3.5 group hover:shadow-primary/20 hover:shadow-lg" 
                 variant="default"
                 size="lg"
                 aria-label={imageDataUrl ? 'Change uploaded photo' : 'Upload a photo'}
               >
-                <Upload className="mr-2.5 h-5 w-5 group-hover:animate-bounce" /> {imageDataUrl ? 'Change Photo' : 'Select Photo'}
+                <Upload className="mr-2.5 h-5 w-5 transition-transform group-hover:translate-y-[-2px]" /> {imageDataUrl ? 'Change Photo' : 'Select Photo'}
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg flex flex-col bg-card/80 border-border/50 card-hover-elevate">
+          <Card className="shadow-lg flex flex-col bg-card border-border/70 card-hover-elevate">
             <CardHeader className="pb-4">
               <CardTitle className="text-xl lg:text-2xl font-semibold flex items-center gap-3 text-accent">
-                <FileText className="h-6 w-6 lg:h-7 lg:w-7" /> Poetic Echoes
+                <FileText className="h-7 w-7" /> Poetic Echoes
               </CardTitle>
-              <CardDescription className="text-muted-foreground/90 pt-0.5">AI-crafted verse inspired by your image.</CardDescription>
+              <CardDescription className="text-muted-foreground/80 pt-1">AI-crafted verse inspired by your image.</CardDescription>
             </CardHeader>
-            <CardContent className="flex-grow space-y-6 flex flex-col justify-between"> {/* Increased space */}
-              <div className="poem-text-display min-h-[220px] flex flex-col justify-center">
+            <CardContent className="flex-grow space-y-6 flex flex-col justify-between pt-2"> 
+              <div className="poem-text-display flex flex-col justify-center">
                 <PoemDisplay />
               </div>
               
               {imageDataUrl && (
-                <div className="space-y-5 p-5 border border-border/30 rounded-lg bg-muted/20 shadow-sm">
-                  <div className="flex items-center justify-between mb-1">
+                <div className="space-y-5 p-5 border border-border/40 rounded-lg bg-background shadow-sm mt-4">
+                  <div className="flex items-center justify-between mb-2">
                     <h3 className="text-lg font-semibold text-primary flex items-center gap-2.5">
                       <Palette className="h-5 w-5" /> {poem ? "Refine Your Verse" : "Set Preferences"}
                     </h3>
                   </div>
                   
-                  <div className="grid sm:grid-cols-2 gap-5">
-                    <div className="space-y-2.5">
-                      <Label htmlFor="poemLength" className="text-sm font-medium text-foreground/80">Poem Length</Label>
+                  <div className="grid sm:grid-cols-2 gap-x-5 gap-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="poemLength" className="text-sm font-medium text-foreground/90">Poem Length</Label>
                       <Select value={customLength} onValueChange={(value: PoemLength) => setCustomLength(value)}>
-                        <SelectTrigger id="poemLength" className="bg-background hover:border-primary/50 focus:ring-primary/40 text-sm">
+                        <SelectTrigger id="poemLength" className="bg-input hover:border-primary/50 focus:ring-primary/40 text-sm">
                           <SelectValue placeholder="Select length" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="short">Short &amp; Sweet</SelectItem>
+                          <SelectItem value="short">Short & Sweet</SelectItem>
                           <SelectItem value="medium" className="font-medium">Medium Verse</SelectItem>
                           <SelectItem value="long">Epic Tale</SelectItem>
                         </SelectContent>
                       </Select>
                       {poem && (
-                         <Button onClick={regenerateWithLength} disabled={isLoading} variant="outline" className="w-full mt-2 group hover:border-primary hover:text-primary text-sm py-2.5">
+                         <Button onClick={regenerateWithLength} disabled={isLoading} variant="outline" className="w-full mt-2.5 group hover:border-primary hover:text-primary text-sm py-2.5">
                           {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4 group-hover:rotate-[270deg] transition-transform duration-300" />}
                           Apply Length
                         </Button>
                       )}
                     </div>
 
-                    <div className="space-y-2.5">
-                      <Label htmlFor="poemTone" className="text-sm font-medium text-foreground/80">Poem Tone</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="poemTone" className="text-sm font-medium text-foreground/90">Poem Tone</Label>
                       <Input
                         id="poemTone"
                         type="text"
                         value={customTone}
                         onChange={(e) => setCustomTone(e.target.value)}
                         placeholder="e.g., joyful, reflective, epic"
-                        className="bg-background hover:border-primary/50 focus:ring-primary/40 text-sm"
+                        className="bg-input hover:border-primary/50 focus:ring-primary/40 text-sm"
                       />
                        {poem && (
-                          <Button onClick={regenerateWithTone} disabled={isLoading || !customTone} variant="outline" className="w-full mt-2 group hover:border-primary hover:text-primary text-sm py-2.5">
+                          <Button onClick={regenerateWithTone} disabled={isLoading || !customTone} variant="outline" className="w-full mt-2.5 group hover:border-primary hover:text-primary text-sm py-2.5">
                             {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <RefreshCw className="mr-2 h-4 w-4 group-hover:rotate-[270deg] transition-transform duration-300" />}
                             Apply Tone
                           </Button>
@@ -337,19 +330,19 @@ export default function PhotoPoetApp() {
                 <Button 
                   onClick={generatePoem} 
                   disabled={isLoading} 
-                  className="w-full text-base py-3 group hover:shadow-accent/30 hover:shadow-md"
+                  className="w-full text-base py-3.5 group hover:shadow-accent/20 hover:shadow-lg mt-4"
                   variant="secondary"
                   size="lg"
                   aria-label="Generate poem from uploaded image"
                 >
-                  {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Feather className="mr-2 h-5 w-5 group-hover:animate-ping" />}
+                  {isLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <Feather className="mr-2 h-5 w-5 transition-transform group-hover:scale-110" />}
                   Generate Poem
                 </Button>
               )}
 
 
               {poem && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-4">
                   <Button 
                     onClick={handleCopyPoem}
                     disabled={isLoading || !poem}
@@ -371,9 +364,8 @@ export default function PhotoPoetApp() {
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button 
-                        onClick={handleShare} 
                         disabled={isLoading || !poem} 
-                        className="flex-1 text-sm py-2.5 group hover:shadow-primary/30 hover:shadow-md" 
+                        className="flex-1 text-sm py-2.5 group hover:shadow-primary/20 hover:shadow-md" 
                         variant="default"
                         aria-label="Share generated poem"
                       >
@@ -410,15 +402,33 @@ export default function PhotoPoetApp() {
             </CardContent>
           </Card>
         </div>
+
+        <Separator className="my-10 md:my-14 lg:my-16 bg-border/50" />
+
+        <section className="text-center max-w-3xl mx-auto animate-fadeIn" style={{animationDelay: '0.3s'}}>
+          <div className="flex justify-center mb-5">
+            <HelpCircle className="h-10 w-10 text-accent opacity-80" />
+          </div>
+          <h2 className="text-2xl lg:text-3xl font-semibold mb-4 text-foreground/90">How PhotoPoet Works</h2>
+          <p className="text-muted-foreground/90 leading-relaxed text-sm md:text-base lg:text-lg">
+            Welcome to PhotoPoet! Unleash your creativity by transforming your favorite images into unique, AI-generated poems. 
+            Simply <strong className="text-primary/90">upload a photo</strong> that inspires you. Our intelligent muse will then <strong className="text-accent/90">craft a verse</strong> reflecting its essence. 
+            After the initial creation, you can <strong className="text-primary/90">refine the poem's tone and length</strong> to perfectly match your vision. 
+            It&apos;s a new way to find inspiration, express yourself, and see your pictures in a completely different light.
+          </p>
+          <p className="text-muted-foreground/80 mt-5 text-sm md:text-base">
+            Ready to begin? Just <strong className="text-primary/90">select a photo</strong> using the panel above and let the magic unfold!
+          </p>
+        </section>
       </main>
 
-      <footer className="p-8 border-t border-border/30 bg-card/50 text-center mt-12"> {/* Increased padding, more subtle border */}
+      <footer className="p-8 border-t border-border/50 bg-card/60 text-center mt-16"> 
         <div className="container mx-auto">
-          <PhotoPoetLogo className="mx-auto mb-3.5 h-9" /> {/* Smaller logo in footer */}
-          <p className="text-xs text-muted-foreground"> 
+          <PhotoPoetLogo className="mx-auto mb-4 h-10" /> {/* Smaller logo in footer */}
+          <p className="text-xs text-muted-foreground/80"> 
             &copy; {new Date().getFullYear()} PhotoPoet. Weaving words with light, crafted with code.
           </p>
-          <p className="text-xs text-muted-foreground/70 mt-1">
+          <p className="text-xs text-muted-foreground/70 mt-1.5">
             Powered by Generative AI &mdash; Designed for Inspiration
           </p>
         </div>
