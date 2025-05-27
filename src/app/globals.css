@@ -4,36 +4,36 @@
 
 @layer base {
   :root {
-    /* Light Theme */
+    /* Refined Light Theme */
     --background: 0 0% 100%; /* White */
-    --foreground: 220 15% 20%; /* Dark Cool Grey */
+    --foreground: 220 15% 18%; /* Slightly darker cool grey for better contrast */
 
-    --card: 0 0% 97%; /* Light Grey */
-    --card-foreground: 220 15% 25%;
+    --card: 0 0% 98%; /* Softer Light Grey for cards */
+    --card-foreground: 220 15% 22%;
 
-    --popover: 0 0% 98%;
-    --popover-foreground: 220 15% 25%;
+    --popover: 0 0% 99%; /* Very light grey for popovers */
+    --popover-foreground: 220 15% 22%;
 
-    --primary: 200 85% 50%; /* Vibrant Blue */
-    --primary-foreground: 0 0% 100%; /* White for contrast on blue */
+    --primary: 200 85% 48%; /* Slightly deeper vibrant Blue */
+    --primary-foreground: 0 0% 100%; 
 
-    --secondary: 220 10% 90%; /* Lighter Cool Grey */
-    --secondary-foreground: 220 15% 30%;
+    --secondary: 220 10% 92%; /* Lighter Cool Grey for secondary elements */
+    --secondary-foreground: 220 15% 28%;
 
-    --muted: 220 10% 85%; /* Light Grey for muted elements */
-    --muted-foreground: 220 10% 55%; /* Darker grey for muted text */
+    --muted: 220 10% 88%; /* Muted grey for less emphasis */
+    --muted-foreground: 220 10% 50%; 
 
-    --accent: 250 70% 60%; /* Playful Purple */
-    --accent-foreground: 0 0% 100%; /* White for contrast on accent */
+    --accent: 250 70% 58%; /* Slightly adjusted Playful Purple */
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 70% 55%; /* Retained red for destructive actions */
+    --destructive: 0 70% 50%; /* Slightly deeper red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 10% 80%; /* Subtle border color */
-    --input: 220 10% 92%; /* Input background */
-    --ring: 200 85% 55%; /* Primary color for rings */
+    --border: 220 10% 85%; /* Softer border color */
+    --input: 220 10% 94%; /* Softer Input background */
+    --ring: 200 85% 52%; /* Primary color for rings, slightly adjusted */
 
-    --radius: 0.65rem; /* Slightly smaller radius for a cleaner feel */
+    --radius: 0.65rem; /* Consistent radius */
 
     --chart-1: 200 70% 50%;
     --chart-2: 250 60% 55%;
@@ -41,62 +41,62 @@
     --chart-4: 150 65% 45%;
     --chart-5: 330 75% 65%;
 
-    --sidebar-background: 0 0% 96%;
-    --sidebar-foreground: 220 15% 22%;
-    --sidebar-primary: 200 85% 50%;
+    --sidebar-background: 0 0% 97%; /* Adjusted for light theme */
+    --sidebar-foreground: 220 15% 20%;
+    --sidebar-primary: 200 85% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 250 70% 60%;
+    --sidebar-accent: 250 70% 58%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 10% 75%;
-    --sidebar-ring: 200 85% 55%;
+    --sidebar-border: 220 10% 80%;
+    --sidebar-ring: 200 85% 52%;
   }
 
   .dark {
-    /* Sophisticated Dark Theme (from previous state) */
-    --background: 220 20% 7%; /* Deep charcoal blue */
-    --foreground: 220 15% 88%; /* Light cool grey */
+    /* Refined Dark Theme */
+    --background: 220 20% 5%; /* Even deeper charcoal blue */
+    --foreground: 220 15% 90%; /* Brighter light cool grey */
 
-    --card: 220 20% 11%; /* Slightly lighter charcoal */
-    --card-foreground: 220 15% 88%;
+    --card: 220 20% 9%; /* Slightly darker charcoal for cards */
+    --card-foreground: 220 15% 90%;
 
-    --popover: 220 20% 10%;
-    --popover-foreground: 220 15% 88%;
+    --popover: 220 20% 8%; /* Darker popover */
+    --popover-foreground: 220 15% 90%;
 
-    --primary: 45 90% 65%; /* Muted Gold / Amber */
-    --primary-foreground: 220 20% 10%; /* Dark for contrast on gold */
+    --primary: 45 90% 60%; /* Slightly desaturated Muted Gold / Amber */
+    --primary-foreground: 220 20% 8%; 
 
-    --secondary: 210 15% 25%; /* Cool dark grey */
-    --secondary-foreground: 210 15% 80%;
+    --secondary: 210 15% 22%; /* Darker cool grey for secondary */
+    --secondary-foreground: 210 15% 85%;
 
-    --muted: 220 15% 20%; /* Darker grey for muted elements */
-    --muted-foreground: 220 10% 65%; /* Lighter grey for muted text */
+    --muted: 220 15% 18%; /* Darker grey for muted elements */
+    --muted-foreground: 220 10% 60%; 
 
-    --accent: 190 80% 60%; /* Bright Cyan/Teal for accents */
-    --accent-foreground: 220 20% 10%; /* Dark for contrast on accent */
+    --accent: 190 80% 55%; /* Slightly desaturated Bright Cyan/Teal */
+    --accent-foreground: 220 20% 8%; 
 
-    --destructive: 0 70% 55%; /* Slightly desaturated red */
+    --destructive: 0 65% 50%; /* Desaturated red */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 15% 25%; /* Subtle border color */
-    --input: 220 15% 20%; /* Input background */
-    --ring: 45 90% 65%; /* Primary color for rings */
+    --border: 220 15% 20%; /* Darker, subtle border */
+    --input: 220 15% 18%; /* Darker Input background */
+    --ring: 45 90% 60%; 
     
     /* --radius is same as :root */
 
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --chart-1: 220 70% 55%;
+    --chart-2: 160 60% 50%;
+    --chart-3: 30 80% 60%;
+    --chart-4: 280 65% 65%;
+    --chart-5: 340 75% 60%;
 
-    --sidebar-background: 220 20% 9%;
-    --sidebar-foreground: 220 15% 85%;
-    --sidebar-primary: 45 90% 65%;
-    --sidebar-primary-foreground: 220 20% 10%;
+    --sidebar-background: 220 20% 7%; /* Adjusted for dark theme */
+    --sidebar-foreground: 220 15% 88%;
+    --sidebar-primary: 45 90% 60%;
+    --sidebar-primary-foreground: 220 20% 8%;
     --sidebar-accent: 190 80% 55%;
-    --sidebar-accent-foreground: 220 20% 10%;
-    --sidebar-border: 220 15% 20%;
-    --sidebar-ring: 45 90% 65%;
+    --sidebar-accent-foreground: 220 20% 8%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 45 90% 60%;
   }
 }
 
@@ -120,7 +120,7 @@
 
 /* Animation for fade-in effect */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); } /* Slightly less Y transform */
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fadeIn {
@@ -130,15 +130,15 @@
 /* Subtle pop on hover for interactive elements */
 @keyframes subtlePop {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.03); }
+  50% { transform: scale(1.025); } /* Slightly less pop */
 }
 .animate-subtlePop:hover {
-  /* transform: scale(1.03); */ /* Direct transform is often smoother */
+   /* Using direct transform can be smoother for simple scales */
 }
 
 /* Gentle slide-up for cards or sections */
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(15px); } /* Slightly less Y transform */
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-slideUp {
@@ -150,42 +150,46 @@
   @apply transition-all duration-300 ease-in-out;
 }
 .card-hover-elevate:hover {
-  @apply shadow-2xl transform -translate-y-1;
+  @apply shadow-xl transform -translate-y-0.5; /* More subtle elevation and shadow */
 }
 
-/* Styling for scrollbars */
+/* Styling for scrollbars - refined */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px; /* Thinner scrollbar */
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted) / 0.5);
+  background: hsl(var(--muted) / 0.3); /* More transparent track */
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary) / 0.7);
+  background: hsl(var(--primary) / 0.6); /* Slightly more transparent thumb */
   border-radius: 10px;
+  border: 1px solid hsl(var(--muted) / 0.3); /* Subtle border for thumb */
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary));
+  background: hsl(var(--primary) / 0.8); /* Darken on hover */
 }
 
 .poem-text-display {
   white-space: pre-wrap;
-  font-family: var(--font-geist-mono), monospace; /* Using mono for poems can be nice */
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: hsl(var(--foreground) / 0.9);
-  padding: theme(spacing.4);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 1.05rem; /* Slightly adjusted font size */
+  line-height: 1.75; /* Increased line height for readability */
+  color: hsl(var(--foreground) / 0.85); /* Slightly softer text color */
+  padding: theme(spacing.6); /* Increased padding */
   border-radius: var(--radius);
-  background-color: hsl(var(--background) / 0.5); /* Subtle background */
-  border: 1px solid hsl(var(--border) / 0.5);
-  box-shadow: inset 0 1px 3px hsl(var(--muted) / 0.2);
-  min-height: 200px; /* Ensure it has some height even when empty */
-  max-height: 450px; /* Prevent it from becoming too tall */
+  background-color: hsl(var(--card) / 0.7); /* Use card color with transparency */
+  border: 1px solid hsl(var(--border) / 0.7); /* Softer border */
+  box-shadow: inset 0 1px 2px hsl(var(--muted) / 0.1); /* More subtle inner shadow */
+  min-height: 220px; /* Adjusted min-height */
+  max-height: 480px; /* Adjusted max-height */
   overflow-y: auto;
+  transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
 }
 
 .dark .poem-text-display {
-  background-color: hsl(var(--background) / 0.8); /* Darker subtle background for dark mode */
+  background-color: hsl(var(--card) / 0.85); /* Darker subtle background for dark mode */
+  color: hsl(var(--foreground) / 0.9);
+  border-color: hsl(var(--border) / 0.7);
 }
