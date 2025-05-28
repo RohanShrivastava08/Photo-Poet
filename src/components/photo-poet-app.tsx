@@ -24,7 +24,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 
 type PoemLength = 'short' | 'medium' | 'long';
 
-const EXAMPLE_IMAGE_URL = 'https://placehold.co/600x400.png';
+const EXAMPLE_IMAGE_URL = 'https://images.unsplash.com/photo-1542362567-b07e54358753?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDV8fGNhcnxlbnwwfHwwfHx8MA%3D%3D';
 const EXAMPLE_IMAGE_HINT = "vintage car";
 const EXAMPLE_POEM = `Wheels of time, now hushed and still,
 Beneath the sun, on a silent hill.
@@ -262,7 +262,7 @@ export default function PhotoPoetApp() {
                 <ImageIcon className="h-7 w-7" /> Your Visual Muse
               </CardTitle>
               <CardDescription className="text-muted-foreground/80 pt-1">
-                Upload an image to inspire a unique poem.
+                Select a photo, and watch as words weave its story.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center space-y-6 pt-2">
@@ -311,7 +311,7 @@ export default function PhotoPoetApp() {
                 <FileText className="h-7 w-7" /> Poetic Echoes
               </CardTitle>
               <CardDescription className="text-muted-foreground/80 pt-1">
-                 AI-crafted verse inspired by your image will appear here.
+                 Verse inspired by your image will unfold here.
               </CardDescription>
             </CardHeader>
             <CardContent className="flex-grow space-y-6 flex flex-col justify-between pt-2"> 
