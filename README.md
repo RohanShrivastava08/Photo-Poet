@@ -1,5 +1,9 @@
 # 📸 PhotoPoet – A Visual Storytelling AI Studio
 
+- A futuristic AI-powered photo journaling studio built with Firebase, Next.js, and Tailwind CSS.
+  
+- PhotoPoet enables users to generate poetic narratives around images — combining creativity, cloud, and code into an elegant experience.
+
 ![Screenshot (197)](https://github.com/user-attachments/assets/f5dbb760-9265-474a-b1af-2a5dc6819211)
 
 ![Screenshot (199)](https://github.com/user-attachments/assets/880e610b-ab9c-464e-93cc-622f41c5c293)
@@ -8,8 +12,7 @@
 
 ![Screenshot (205)](https://github.com/user-attachments/assets/499b6ac7-f0bf-4cab-b6d5-9e59b2eddeeb)
 
-- A futuristic AI-powered photo journaling studio built with Firebase, Next.js, and Tailwind CSS.
-- PhotoPoet enables users to generate poetic narratives around images — combining creativity, cloud, and code into an elegant experience.
+
 
 
 ## 📋 Table of Contents
